@@ -26,7 +26,7 @@ const Paste = () => {
     }
 
     const shareContent = (id) => {
-        const sharePaste = pastes.filter((p) => {
+        const sharePaste = pastes.find((p) => {
             p._id === id;
         });
         if (navigator.share) {
@@ -34,7 +34,7 @@ const Paste = () => {
                 title: "Check this out!",
                 text: sharePaste,
                 url: window.location.href,
-            }).then(() => console.log("Successfull Shared")).catch(() => console.error("Error Sharing", error));
+            }).then(() => console.log("Successfull Shared")).catch((error) => console.error("Error Sharing", error));
             toast.success("Shared");
         }
         else {
@@ -44,12 +44,13 @@ const Paste = () => {
 
     return (
         <div className='flex flex-col items-center justify-center w-full bg-black text-white gap-3 p-4 mt-2'>
-            <input type="search" placeholder='search here' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='border rounded-md px-4 py-2 outline-none' />
+
+            <div> <input className='px-4 py-2 rounded-lg outline-red-300 bg-white text-black' type="search" placeholder='search here' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /></div>
             <div className='flex flex-col gap-5 min-w-[20rem]'>
                 {
                     filteredData.length > 0 &&
                     filteredData.map((paste) => {
-                        console.log('hi', filteredData);
+                        console.log(filteredData);
                         return (
                             <div key={paste.title} className='rounded-lg bg-zinc-800 p-4'>
                                 <div>
